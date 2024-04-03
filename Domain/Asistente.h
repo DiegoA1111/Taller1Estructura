@@ -11,5 +11,5 @@ class Asistente{
     public:
     Asistente(string, int);
     ~Asistente();
-    virtual string& mostrarInformacion() = 0;
+    virtual string mostrarInformacion() = 0;
 };

@@ -11,6 +11,6 @@ class Estudiante : public Asistente{
     public:
     Estudiante(string, int, string, string);
     ~Estudiante();
-    string& mostrarInformacion();
+    string mostrarInformacion();
 
 };

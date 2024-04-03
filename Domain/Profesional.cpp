@@ -10,8 +10,7 @@ Profesional::Profesional(string nombre, int edad, string ocupacion, string empre
 
 Profesional::~Profesional(){}
 
-string &Profesional::mostrarInformacion()
+string Profesional::mostrarInformacion()
 {
-   string informacion = "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Ocupación: "+ocupacion+ "en "+empresa; 
-    return informacion;
+   return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Ocupación: "+ocupacion+ "en "+empresa; 
 }

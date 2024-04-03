@@ -11,6 +11,6 @@ class Profesional : public Asistente{
     public:
     Profesional(string, int, string, string);
     ~Profesional();
-    string& mostrarInformacion();
+    string mostrarInformacion();
 
 };

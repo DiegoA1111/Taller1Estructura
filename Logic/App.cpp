@@ -25,6 +25,7 @@ string toLowerCase(string& cadenaInicial){
 bool verificarArchivos(string rutaTxt, string ruta2Txt){
     ifstream file(rutaTxt);
     ifstream file2(ruta2Txt);
+    cout<<"Entré aqui"<<endl;
 
     if(!file.is_open() || !file2.is_open()){
         if(!file.is_open() && file2.is_open()){ file2.close(); }
@@ -32,6 +33,7 @@ bool verificarArchivos(string rutaTxt, string ruta2Txt){
         //cout<<"Archivo no encontrado"<<endl;
         return false;
     } else{
+        cout << "encontrados" <<endl;
         return true;
     }
 
@@ -60,13 +62,17 @@ void leerArchivo2(string rutaTxt){
             cout<<"Es estudiante" <<endl;
             string carrera = partes[3];
             string institucion = partes[4];
-            listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
+            //Asistente *estudiante = new Estudiante(nombre,edad,carrera,institucion);
+            //listadoAsistentes.push_back(estudiante);
+            //listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
 
         } else if(toLowerCase(tipo) == "profesional"){
             cout<<"Es profesional"<<endl;
             string ocupacion = partes[3];
             string empresa = partes[4];
-            listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
+            //Asistente *profesional = new Profesional(nombre,edad,ocupacion,empresa);
+            //listadoAsistentes.push_back(profesional);
+            //listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
 
         }    
     }
@@ -74,20 +80,27 @@ void leerArchivo2(string rutaTxt){
 
 
 int main(int argc, char const *argv[])
+// /workspaces/Taller1Estructura/Data 
 {   
-    bool status = verificarArchivos("../../Data/eventos.txt","../../Data/asistentes.txt");
+    /*string ruta = "../Data/asistentes.txt";
+    ifstream file(ruta);
+    string line;
+    if(!file.is_open()){
+        cout<<"no encontrado"<< endl;
+    } */
+
+    bool status = verificarArchivos("../Data/eventos.txt","../Data/asistentes.txt");
     if(status != false){
         //leerArchivo1("../../Data/eventos.txt");
         leerArchivo2("../../Data/asistentes.txt");
-        for(size_t i = 0; i < listadoAsistentes.size(); ++i){
+        /* for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Asistente* asistenteActual = listadoAsistentes[i];
             asistenteActual->mostrarInformacion();
-        }
-    
-    
-    
+        } */
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     
+
+
     return 0;
 }
