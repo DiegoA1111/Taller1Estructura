@@ -4,10 +4,11 @@
 #include <sstream>
 #include <vector>
 #include "../Domain/Evento.h"
+#include "../Domain/Concierto.h"
+#include "../Domain/Conferencia.h"
 #include "../Domain/Persona.h"
 #include "../Domain/Estudiante.h"
 #include "../Domain/Profesional.h"
-#include "../Domain/Concierto.h"
 
 using namespace std;
 
@@ -49,7 +50,6 @@ bool registrarAsistente(){
     cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl; string dni; getline(cin,dni);
     Persona *persona = buscarPersona(dni);
     if(persona != nullptr){
-        //printf("[i] Persona identificada. Nombre: %s",persona->getNombre());
         cout << "Persona identificada. Nombre: " << persona->getNombre() <<endl;
         if(listadoEventos.size() > 0){
             mostrarListadoEventos();
@@ -88,26 +88,28 @@ bool registrarAsistente(){
 bool crearEvento(){
     cout << "Indique tipo de evento (Concierto/Conferencia)"<<endl;
     string tipo; getline(cin,tipo);
-    if(toLowerCase(tipo) == "concierto"){
-        string id, ubicacion, artista; int duracion, capacidad;
-        cout << "Ingrese un id único para el evento: "<<endl; getline(cin,id);
-        if(existeEvento(id)){
+    cout << "Ingrese un id único para el evento: "<<endl; string id; getline(cin,id);
+    if(existeEvento(id)){
             cout << "[!] Un evento con esa ID ya existe."<<endl;
-            
-        } else{
-            cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
-            cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
+    } else{
+        string ubicacion; int duracion, capacidad;
+        cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
             cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
             cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
-            Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista); 
-            listadoEventos.push_back(evento);
-            return true;
-        }
 
-    } else if(toLowerCase(tipo) == "conferencia"){
-        
-        return true;
-    }
+        if(toLowerCase(tipo) == "concierto"){ string artista;
+            cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
+            Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista); 
+            listadoEventos.push_back(evento); return true;
+
+        } else if(toLowerCase(tipo) == "conferencia"){
+            string orador, tema;
+            cout << "Ingrese el nombre del/la orador(a): " <<endl; getline(cin,orador);
+            cout << "Ingrese el tema del evento: " << endl; getline(cin,tema);
+            Evento *evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
+            listadoEventos.push_back(evento); return true;
+        }
+    }        
     return false;
 }
 
@@ -130,25 +132,19 @@ void menuPrincipal(){
         }
 
     } while (opcion != 0);
-    
-
 }
 
 
 bool verificarArchivos(string rutaTxt, string ruta2Txt){
     ifstream file(rutaTxt);
     ifstream file2(ruta2Txt);
-    cout<<"Entré aqui"<<endl;
 
     if(!file.is_open() || !file2.is_open()){
         if(!file.is_open() && file2.is_open()){ file2.close(); }
         else if(file.is_open() && !file2.is_open()){ file.close(); }
         return false;
-    } else{
-        //cout << "[i] Ambos archivos han sido encontrados" <<endl;
-        return true;
     }
-
+    return true;
 }
 
 void leerArchivo1(string rutaTxt){
@@ -212,7 +208,5 @@ int main(int argc, char const *argv[]) {
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     
-
-
     return 0;
 }

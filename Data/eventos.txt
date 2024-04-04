@@ -1,8 +1,8 @@
-Concierto/Estadio la Florida/240/300/Rihanna
-Conferencia/Teatro Caroca/60/60/Jose Roman/Inteligencia Artificial
-Concierto/Estadio Nacional/120/400/Adele
-Conferencia/Centro de Convenciones/90/200/Emily Watson/Neurociencia y Emoción
-Concierto/Movistar Arena/80/150/Charli XCX
-Concierto/Auditorio Nacional/120/250/Beyoncé
-Conferencia/Universidad de Santiago/45/80/Carlos Martínez/Desarrollo Sostenible
-Concierto/Parque de la Ciudad/150/500/Coldplay
+EventID501/Concierto/Estadio la Florida/240/300/Rihanna
+EventID341/Conferencia/Teatro Caroca/60/60/Jose Roman/Inteligencia Artificial
+EventID710/Concierto/Estadio Nacional/120/400/Adele
+EventID111/Conferencia/Centro de Convenciones/90/200/Emily Watson/Neurociencia y Emoción
+EventID232/Concierto/Movistar Arena/80/150/Charli XCX
+EventID534/Concierto/Auditorio Nacional/120/250/Beyoncé
+EventID100/Conferencia/Universidad de Santiago/45/80/Carlos Martínez/Desarrollo Sostenible
+EventID365/Concierto/Parque de la Ciudad/150/500/Coldplay
