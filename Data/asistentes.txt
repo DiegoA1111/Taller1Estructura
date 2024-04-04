@@ -1,15 +1,9 @@
 Estudiante/Sebastian Lopez/202491321/29/Kinesiología/Universidad del Mar
 Profesional/Maria Ramirez/167940210/40/Abogada/Banco Santander
-Estudiante/Andres Torres/19733469K/25/Ingeniería Civil/Universidad de Chile
-Profesional/Carolina Rodriguez/180320214/32/Periodista/Canal 13
 Estudiante/Pedro Gomez/213657022/22/Psicología/Universidad Nacional Autónoma de México
-Profesional/Roberto Suarez/168605551/39/Psicólogo Clínico/Hospital Universitario
-Estudiante/Diego Fernandez/199504310/27/Economía/Universidad Complutense de Madrid
 Profesional/Laura Martinez/168599508/38/Médico/Hospital Regional
 Estudiante/Fernando Perez/199650210K/30/Derecho/Universidad de Buenos Aires
 Profesional/Ana Silva/16301752K/45/Arquitecta/Constructora ABC
-Estudiante/Gabriel Mendoza/197103444/23/Medicina/Universidad Nacional de Colombia
-Profesional/Luisa Garcia/162001236/36/Ingeniera de Software/Google
-Estudiante/Martina Hernandez/199406789/26/Comunicación Audiovisual/Universidad Autónoma de Barcelona
 Profesional/Elena Vargas/167603190/42/Contadora/PwC
+Profesional/Carolina Rodriguez/197103444/32/Periodista/Canal 13
 Profesional/Jose Caupolican/164001231/34/Ingeniero/CODELCO

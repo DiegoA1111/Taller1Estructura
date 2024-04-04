@@ -139,19 +139,21 @@ void menuPrincipal(){
     } while (opcion != 0);
 }
 
-bool verificarArchivos(string rutaTxt, string ruta2Txt){
+bool verificarArchivos(string rutaTxt, string ruta2Txt, string ruta3Txt){
     ifstream file(rutaTxt);
     ifstream file2(ruta2Txt);
+    ifstream file3(ruta3Txt);
 
-    if(!file.is_open() || !file2.is_open()){
-        if(!file.is_open() && file2.is_open()){ file2.close(); }
-        else if(file.is_open() && !file2.is_open()){ file.close(); }
+    if(!file.is_open() || !file2.is_open() || !file3.is_open()){
+        //if(!file.is_open() && file2.is_open()){ file2.close(); }
+        //else if(file.is_open() && !file2.is_open()){ file.close(); }
+        file.close(); file2.close(); file3.close();
         return false;
     }
     return true;
 }
 
-void leerArchivo1(string rutaTxt){
+void leerArchivoEventos(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
@@ -165,7 +167,7 @@ void leerArchivo1(string rutaTxt){
     }
 }
 
-void leerArchivo2(string rutaTxt){
+void leerArchivoAsistentes(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
@@ -207,10 +209,10 @@ void leerArchivo2(string rutaTxt){
 
 
 int main(int argc, char const *argv[]) {  
-    bool status = verificarArchivos("Data/eventos.txt","Data/asistentes.txt");
+    bool status = verificarArchivos("Data/eventos.txt","Data/asistentes.txt","Data/listadoAsistencia.txt");
     if(status != false){
-        //leerArchivo1("eventos.txt");
-        leerArchivo2("Data/asistentes.txt");
+        leerArchivoEventos("eventos.txt");
+        leerArchivoAsistentes("Data/asistentes.txt");
         for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Persona *asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
