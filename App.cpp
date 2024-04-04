@@ -3,12 +3,10 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "../Domain/Evento.h"
-//#include "../Domain/Concierto.h"
-//#include "../Domain/Conferencia.h"
-#include "../Domain/Asistente.h"
-#include "../Domain/Estudiante.h"
-#include "../Domain/Profesional.h"
+#include "Evento.h"
+#include "Asistente.h"
+#include "Estudiante.h"
+#include "Profesional.h"
 
 
 using namespace std;
@@ -62,17 +60,17 @@ void leerArchivo2(string rutaTxt){
             cout<<"Es estudiante" <<endl;
             string carrera = partes[3];
             string institucion = partes[4];
-            //Asistente *estudiante = new Estudiante(nombre,edad,carrera,institucion);
-            //listadoAsistentes.push_back(estudiante);
-            //listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
+            Asistente *estudiante = new Estudiante(nombre,edad,carrera,institucion);
+            listadoAsistentes.push_back(estudiante);
+            listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
 
         } else if(toLowerCase(tipo) == "profesional"){
             cout<<"Es profesional"<<endl;
             string ocupacion = partes[3];
             string empresa = partes[4];
-            //Asistente *profesional = new Profesional(nombre,edad,ocupacion,empresa);
-            //listadoAsistentes.push_back(profesional);
-            //listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
+            Asistente *profesional = new Profesional(nombre,edad,ocupacion,empresa);
+            listadoAsistentes.push_back(profesional);
+            listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
 
         }    
     }
@@ -89,14 +87,17 @@ int main(int argc, char const *argv[])
         cout<<"no encontrado"<< endl;
     } */
 
-    bool status = verificarArchivos("../Data/eventos.txt","../Data/asistentes.txt");
+    bool status = verificarArchivos("eventos.txt","asistentes.txt");
     if(status != false){
         //leerArchivo1("../../Data/eventos.txt");
-        leerArchivo2("../../Data/asistentes.txt");
-        /* for(size_t i = 0; i < listadoAsistentes.size(); ++i){
+        leerArchivo2("asistentes.txt");
+        for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Asistente* asistenteActual = listadoAsistentes[i];
-            asistenteActual->mostrarInformacion();
-        } */
+            cout << asistenteActual->mostrarInformacion() << endl;
+        } 
+        Evento *e = new Evento("Movistar Arena",25,10);
+        cout << "evento creado"<< endl;
+        //delete e;
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     

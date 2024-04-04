@@ -11,7 +11,7 @@ class Evento{
     int duracion, capacidad;
     vector<Asistente*> listadoAsistentes;
     public:
-    Evento(string, int, int);
+    Evento(string ubicacion, int duracion, int capacidad);
     ~Evento();
 
 };
