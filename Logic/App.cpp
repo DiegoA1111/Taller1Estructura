@@ -96,9 +96,9 @@ bool crearEvento(){
         string ubicacion; int duracion, capacidad;
         cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
         cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore();
         cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore();
 
         if(toLowerCase(tipo) == "concierto"){ string artista;
             cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
@@ -123,7 +123,7 @@ void menuPrincipal(){
         cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl;
         cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
         cout << "Opción: ";
-        cin>>opcion; cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin>>opcion; cin.ignore();
         switch (opcion)
         {
         case 1:
@@ -138,7 +138,6 @@ void menuPrincipal(){
 
     } while (opcion != 0);
 }
-
 
 bool verificarArchivos(string rutaTxt, string ruta2Txt){
     ifstream file(rutaTxt);
