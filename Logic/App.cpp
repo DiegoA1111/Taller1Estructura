@@ -90,12 +90,12 @@ bool crearEvento(){
     string tipo; getline(cin,tipo);
     cout << "Ingrese un id único para el evento: "<<endl; string id; getline(cin,id);
     if(existeEvento(id)){
-            cout << "[!] Un evento con esa ID ya existe."<<endl;
+        cout << "[!] Un evento con esa ID ya existe."<<endl;
     } else{
         string ubicacion; int duracion, capacidad;
         cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
-            cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
-            cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
+        cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
+        cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
 
         if(toLowerCase(tipo) == "concierto"){ string artista;
             cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
@@ -115,7 +115,7 @@ bool crearEvento(){
 
 void menuPrincipal(){
     cout << "Bienvenido al menú de Gestión de Eventos" << endl;
-    cout <<"Por favor, ingrese una de las siguientes opciones: "<<endl; int opcion;
+    cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl; int opcion;
     cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
     do {
         cin>>opcion;
