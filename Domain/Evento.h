@@ -7,11 +7,13 @@ using namespace std;
 
 class Evento{
     protected:
-    string ubicacion;
+    string ubicacion, id;
     int duracion, capacidad;
     vector<Asistente*> listadoAsistentes;
     public:
-    Evento(string ubicacion, int duracion, int capacidad);
+    Evento(string id,string ubicacion, int duracion, int capacidad);
     ~Evento();
+    virtual string mostrarInformacion() = 0;
+    string getId();
 
 };

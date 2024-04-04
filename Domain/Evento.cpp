@@ -1,6 +1,7 @@
 #include "Evento.h"
 
-Evento::Evento(string ubicacion, int duracion, int capacidad) {
+Evento::Evento(string id, string ubicacion, int duracion, int capacidad) {
+    this->id = id;
     this->ubicacion = ubicacion;
     this->duracion = duracion;
     this->capacidad = capacidad;
@@ -8,3 +9,8 @@ Evento::Evento(string ubicacion, int duracion, int capacidad) {
 }
 
 Evento::~Evento(){}
+
+string Evento::getId()
+{
+    return id;
+}

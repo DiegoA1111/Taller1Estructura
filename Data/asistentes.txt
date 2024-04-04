@@ -1,0 +1,15 @@
+Estudiante/Sebastian Lopez/29/Kinesiología/Universidad del Mar
+Profesional/Maria Ramirez/40/Abogada/Banco Santander
+Estudiante/Andres Torres/25/Ingeniería Civil/Universidad de Chile
+Profesional/Carolina Rodriguez/32/Periodista/Canal 13
+Estudiante/Pedro Gomez/22/Psicología/Universidad Nacional Autónoma de México
+Profesional/Roberto Suarez/39/Psicólogo Clínico/Hospital Universitario
+Estudiante/Diego Fernandez/27/Economía/Universidad Complutense de Madrid
+Profesional/Laura Martinez/38/Médico/Hospital Regional
+Estudiante/Fernando Perez/30/Derecho/Universidad de Buenos Aires
+Profesional/Ana Silva/45/Arquitecta/Constructora ABC
+Estudiante/Gabriel Mendoza/23/Medicina/Universidad Nacional de Colombia
+Profesional/Luisa Garcia/36/Ingeniera de Software/Google
+Estudiante/Martina Hernandez/26/Comunicación Audiovisual/Universidad Autónoma de Barcelona
+Profesional/Elena Vargas/42/Contadora/PwC
+Profesional/Jose Caupolican/34/Ingeniero/CODELCO
