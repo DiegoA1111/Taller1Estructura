@@ -27,7 +27,7 @@ void mostrarListadoEventos(){
     cout << " --- Listado de Eventos del Sistema --- "<<endl;
     for(int i = 0; i < listadoEventos.size(); i++){
         Evento *evento = listadoEventos[i];
-        cout <<" "<< i << ")" << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
+        cout <<" "<< i << ") " << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
     }
 }
 
@@ -46,6 +46,15 @@ Persona* buscarPersona(string dniBuscado){
     }
     return nullptr;
 }
+
+Evento* buscarEvento(string idBuscado){
+    for(int i = 0; i < listadoEventos.size(); i++){
+        Evento *evento = listadoEventos[i]; string idEvento = evento->getId();
+        if(toLowerCase(idBuscado) == toLowerCase(idEvento)){ return evento; }
+    }
+    return nullptr;
+}
+
 
 bool registrarAsistente(){
     cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl; string dni; getline(cin,dni);
@@ -121,7 +130,7 @@ void menuPrincipal(){
     do {
         cout << "Bienvenido al menú de Gestión de Eventos" << endl;
         cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl;
-        cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
+        cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Revisar listado de EVENTOS \n5) Generar informes"<<endl;
         cout << "Opción: ";
         cin>>opcion; cin.ignore();
         switch (opcion)
@@ -132,7 +141,12 @@ void menuPrincipal(){
         case 2:
             if(registrarAsistente()){cout << "[i] Asistente agregado exitosamente."; }
             else{cout << "[!] No se pudo registrar asistente. "<<endl; } break;
-        default:
+        case 3:
+            break;
+        case 4:
+            mostrarListadoEventos();
+            break;
+        case 5:
             break;
         }
 
@@ -156,7 +170,10 @@ bool verificarArchivos(string rutaTxt, string ruta2Txt, string ruta3Txt){
 void leerArchivoEventos(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
+    
+
     while(getline(file,line)){
+        //cout << "JSAJKSASLKJAHSJA" << endl;
         vector <string> partes;
         stringstream ss(line);
         string parte;
@@ -165,10 +182,21 @@ void leerArchivoEventos(string rutaTxt){
             partes.push_back(parte);
         }
 
-        string tipo = partes[0];
-        string nombre = partes[1];
-        string dni = partes[2];
-        int edad = stoi(partes[3]);
+        string id = partes[0];
+        string tipo = partes[1];
+        string ubicacion = partes[2];
+        int duracion = stoi(partes[3]);
+        int capacidad = stoi(partes[4]);
+        if(toLowerCase(tipo) == "concierto") {
+            string artista = partes[5];
+            Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista);
+            listadoEventos.push_back(evento);
+        } else if(toLowerCase(tipo) == "conferencia") {
+            string orador = partes[5]; string tema = partes[6];
+            Evento *evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
+            listadoEventos.push_back(evento);
+        }
+        //  id tipo ubicacion duracion capacidad Atributo diferencial: artista y orador-tema
     }
 }
 
@@ -184,11 +212,10 @@ void leerArchivoAsistentes(string rutaTxt){
             partes.push_back(parte);
         }
 
-        for(int i = 0; i < partes.size(); i++){
+        /*for(int i = 0; i < partes.size(); i++){
             cout << partes[i] << " ";
         }
-        cout << "\n";
-
+        cout << "\n"; */
 
         string tipo = partes[0];
         string nombre = partes[1];
@@ -196,14 +223,14 @@ void leerArchivoAsistentes(string rutaTxt){
         int edad = stoi(partes[3]);
 
         if(toLowerCase(tipo) == "estudiante"){
-            cout<<"Es estudiante" <<endl;
+            // cout<<"Es estudiante" <<endl;
             string carrera = partes[4];
             string institucion = partes[5];
             Persona *estudiante = new Estudiante(nombre,dni,edad,carrera,institucion);
             listadoAsistentes.push_back(estudiante);
 
         } else if(toLowerCase(tipo) == "profesional"){
-            cout<<"Es profesional"<<endl;
+            // cout<<"Es profesional"<<endl;
             string ocupacion = partes[4];
             string empresa = partes[5];
             Persona *profesional = new Profesional(nombre,dni,edad,ocupacion,empresa);
@@ -212,16 +239,43 @@ void leerArchivoAsistentes(string rutaTxt){
     }
 }
 
+void leerArchivoAsistencia(string rutaTxt){
+    ifstream file(rutaTxt);
+    string line;
+    while(getline(file,line)){
+        //cout << "LEYENDO" << endl;
+        vector <string> partes;
+        stringstream ss(line);
+        string parte;
+
+        while(getline(ss,parte,'/')){
+            partes.push_back(parte);
+        }
+
+        string id = partes[0]; Evento *evento = buscarEvento(id);
+        if(evento != nullptr){
+            for(int i = 1; i < partes.size(); i++){
+                string dni = partes[i]; Persona *persona = buscarPersona(dni);
+                if(persona != nullptr){
+                    evento->agregarAsistente(persona);
+                    cout<<" ---- "<<endl;
+                }
+            }
+        }
+    }
+}
 
 int main(int argc, char const *argv[]) {  
     bool status = verificarArchivos("Data/eventos.txt","Data/asistentes.txt","Data/listadoAsistencia.txt");
     if(status != false){
-        leerArchivoEventos("eventos.txt");
+        leerArchivoEventos("Data/eventos.txt");
         leerArchivoAsistentes("Data/asistentes.txt");
-        for(size_t i = 0; i < listadoAsistentes.size(); ++i){
+        leerArchivoAsistencia("Data/listadoAsistencia.txt");
+        /* for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Persona *asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
-        } 
+        } */
+        
         menuPrincipal();
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
