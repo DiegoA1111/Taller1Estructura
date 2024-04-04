@@ -2,7 +2,7 @@
 using namespace std;
 
 
-Estudiante::Estudiante(string nombre, int edad, string carrera, string institucion) : Asistente(nombre,edad) {
+Estudiante::Estudiante(string nombre, int edad, string carrera, string institucion) : Persona(nombre, dni, edad) {
     this->carrera = carrera;
     this->institucion = institucion;
 }

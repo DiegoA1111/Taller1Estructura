@@ -3,13 +3,13 @@
 
 using namespace std;
 
-class Asistente{
+class Persona{
     protected:
-    string nombre;
+    string nombre, dni;
     int edad;
 
     public:
-    Asistente(string, int);
-    ~Asistente();
+    Persona(string, string, int);
+    ~Persona();
     virtual string mostrarInformacion() = 0;
 };

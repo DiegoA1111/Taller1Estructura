@@ -5,7 +5,7 @@ Evento::Evento(string id, string ubicacion, int duracion, int capacidad) {
     this->ubicacion = ubicacion;
     this->duracion = duracion;
     this->capacidad = capacidad;
-    listadoAsistentes = vector<Asistente*>();
+    listadoAsistentes = vector<Persona*>();
 }
 
 Evento::~Evento(){}

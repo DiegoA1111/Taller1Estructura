@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 #include "../Domain/Evento.h"
-#include "../Domain/Asistente.h"
+#include "../Domain/Persona.h"
 #include "../Domain/Estudiante.h"
 #include "../Domain/Profesional.h"
 #include "../Domain/Concierto.h"
@@ -13,7 +13,7 @@ using namespace std;
 
 
 vector <Evento*> listadoEventos = vector <Evento*>();
-vector <Asistente*> listadoAsistentes = vector <Asistente*>();
+vector <Persona*> listadoAsistentes = vector <Persona*>();
 
 string toLowerCase(string& cadenaInicial){
     string cadenaFinal;
@@ -27,6 +27,10 @@ bool existeEvento(string idEvento){
         if(toLowerCase(idObjeto) == toLowerCase(idEvento)){ return true; }
     }
     return false;
+}
+
+bool registrarAsistente(){
+    cout<< "Ingrese DNI: " << endl;
 }
 
 bool crearEvento(){
@@ -64,9 +68,10 @@ void menuPrincipal(){
         switch (opcion)
         {
         case 1:
-            crearEvento(); break;
-        case 2:
+            if(crearEvento()){ cout << "[i] Evento creado exitosamente."<<endl; } 
             break;
+        case 2:
+            registrarAsistente(); break;
         default:
             break;
         }
@@ -126,7 +131,7 @@ void leerArchivo2(string rutaTxt){
             cout<<"Es estudiante" <<endl;
             string carrera = partes[3];
             string institucion = partes[4];
-            Asistente *estudiante = new Estudiante(nombre,edad,carrera,institucion);
+            Persona *estudiante = new Estudiante(nombre,edad,carrera,institucion);
             listadoAsistentes.push_back(estudiante);
             listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
 
@@ -134,7 +139,7 @@ void leerArchivo2(string rutaTxt){
             cout<<"Es profesional"<<endl;
             string ocupacion = partes[3];
             string empresa = partes[4];
-            Asistente *profesional = new Profesional(nombre,edad,ocupacion,empresa);
+            Persona *profesional = new Profesional(nombre,edad,ocupacion,empresa);
             listadoAsistentes.push_back(profesional);
             listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
         }    
@@ -148,14 +153,10 @@ int main(int argc, char const *argv[]) {
         //leerArchivo1("eventos.txt");
         leerArchivo2("asistentes.txt");
         for(size_t i = 0; i < listadoAsistentes.size(); ++i){
-            Asistente *asistenteActual = listadoAsistentes[i];
+            Persona *asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
         } 
         menuPrincipal();
-
-        //Evento *e = new Concierto("Movistar Arena",25,10);
-        //cout << "evento creado"<< endl;
-        //delete e;
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     

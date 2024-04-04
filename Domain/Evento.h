@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "Asistente.h"
+#include "Persona.h"
 
 using namespace std;
 
@@ -9,7 +9,7 @@ class Evento{
     protected:
     string ubicacion, id;
     int duracion, capacidad;
-    vector<Asistente*> listadoAsistentes;
+    vector<Persona*> listadoAsistentes;
     public:
     Evento(string id,string ubicacion, int duracion, int capacidad);
     ~Evento();

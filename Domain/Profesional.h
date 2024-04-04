@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-#include "Asistente.h"
+#include "Persona.h"
 
 using namespace std;
 
-class Profesional : public Asistente{
+class Profesional : public Persona{
     private:
     string ocupacion;
     string empresa;
