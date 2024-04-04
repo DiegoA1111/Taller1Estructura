@@ -27,7 +27,15 @@ void mostrarListadoEventos(){
     cout << " --- Listado de Eventos del Sistema --- "<<endl;
     for(int i = 0; i < listadoEventos.size(); i++){
         Evento *evento = listadoEventos[i];
-        cout <<" "<< i << ") " << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
+        cout <<" "<< i+1 << ") " << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
+    }
+}
+
+void mostrarListadoPersonas(){
+    cout << " --- Listado de Personas del Sistema --- "<<endl;
+    for(int i = 0; i < listadoAsistentes.size(); i++){
+        Persona *persona = listadoAsistentes[i];
+        cout <<" "<< i+1 << ") " << persona->mostrarInformacion() << " | Id: "<<persona->getDni()<< endl;
     }
 }
 
@@ -243,7 +251,7 @@ void leerArchivoAsistencia(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
-        //cout << "LEYENDO" << endl;
+        //cout << "LINEA" << endl;
         vector <string> partes;
         stringstream ss(line);
         string parte;
@@ -253,12 +261,15 @@ void leerArchivoAsistencia(string rutaTxt){
         }
 
         string id = partes[0]; Evento *evento = buscarEvento(id);
+        //cout << evento->mostrarInformacion() << endl;
         if(evento != nullptr){
             for(int i = 1; i < partes.size(); i++){
+                //cout << "partes -->>" << partes[i] <<endl;
                 string dni = partes[i]; Persona *persona = buscarPersona(dni);
+                //cout << " " << persona->mostrarInformacion() << endl;
                 if(persona != nullptr){
                     evento->agregarAsistente(persona);
-                    cout<<" ---- "<<endl;
+                    //cout<<"Asistente agregado "<<endl;
                 }
             }
         }
@@ -271,6 +282,8 @@ int main(int argc, char const *argv[]) {
         leerArchivoEventos("Data/eventos.txt");
         leerArchivoAsistentes("Data/asistentes.txt");
         leerArchivoAsistencia("Data/listadoAsistencia.txt");
+
+        mostrarListadoPersonas();
         /* for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Persona *asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
