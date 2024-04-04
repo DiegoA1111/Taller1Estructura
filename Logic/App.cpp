@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <limits>
 #include <sstream>
 #include <vector>
 #include "../Domain/Evento.h"
@@ -86,8 +87,8 @@ bool registrarAsistente(){
 }
 
 bool crearEvento(){
-    cout << "Indique tipo de evento (Concierto/Conferencia)"<<endl;
-    string tipo; getline(cin,tipo);
+    cout << "Indique tipo de evento (Concierto/Conferencia): "; string tipo;
+    getline(cin,tipo);
     cout << "Ingrese un id único para el evento: "<<endl; string id; getline(cin,id);
     if(existeEvento(id)){
         cout << "[!] Un evento con esa ID ya existe."<<endl;
@@ -95,7 +96,9 @@ bool crearEvento(){
         string ubicacion; int duracion, capacidad;
         cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
         cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         if(toLowerCase(tipo) == "concierto"){ string artista;
             cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
@@ -114,12 +117,13 @@ bool crearEvento(){
 }
 
 void menuPrincipal(){
-    cout << "Bienvenido al menú de Gestión de Eventos" << endl;
-    cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl; int opcion;
-    cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
-    cout << "Opción: ";
+    int opcion;
     do {
-        cin>>opcion;
+        cout << "Bienvenido al menú de Gestión de Eventos" << endl;
+        cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl;
+        cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
+        cout << "Opción: ";
+        cin>>opcion; cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch (opcion)
         {
         case 1:
