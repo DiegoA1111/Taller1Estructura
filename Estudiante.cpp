@@ -12,5 +12,5 @@ Estudiante::~Estudiante(){}
 
 string Estudiante::mostrarInformacion()
 {
-    return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Estudiante de "+carrera+ "en "+institucion; 
+    return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Estudiante de "+carrera+" en "+institucion; 
 }

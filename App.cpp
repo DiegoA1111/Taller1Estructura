@@ -20,6 +20,24 @@ string toLowerCase(string& cadenaInicial){
     return cadenaFinal;
 }
 
+bool crearEvento(){
+    cout << "Indique tipo de evento (Concierto/Conferencia)"<<endl;
+    string tipo; getline(cin,tipo);
+    if(toLowerCase(tipo) == "concierto"){
+        return true;
+    } else if(toLowerCase(tipo) == "conferencia"){
+        return true;
+    }
+    return false;
+}
+
+void menuPrincipal(){
+    cout << "Bienvenido al menú de Gestión de Eventos" << endl;
+    cout <<"Por favor, ingrese una de las siguientes opciones: "<<endl;
+    cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
+}
+
+
 bool verificarArchivos(string rutaTxt, string ruta2Txt){
     ifstream file(rutaTxt);
     ifstream file2(ruta2Txt);
@@ -39,6 +57,17 @@ bool verificarArchivos(string rutaTxt, string ruta2Txt){
 
 void leerArchivo1(string rutaTxt){
     ifstream file(rutaTxt);
+    string line;
+    while(getline(file,line)){
+        vector <string> partes;
+        stringstream ss(line);
+        string parte;
+
+        while(getline(ss,parte,'/')){
+            partes.push_back(parte);
+        }
+
+    }
 }
 
 void leerArchivo2(string rutaTxt){
@@ -77,27 +106,20 @@ void leerArchivo2(string rutaTxt){
 }
 
 
-int main(int argc, char const *argv[])
-// /workspaces/Taller1Estructura/Data 
-{   
-    /*string ruta = "../Data/asistentes.txt";
-    ifstream file(ruta);
-    string line;
-    if(!file.is_open()){
-        cout<<"no encontrado"<< endl;
-    } */
-
+int main(int argc, char const *argv[]) {  
     bool status = verificarArchivos("eventos.txt","asistentes.txt");
     if(status != false){
-        //leerArchivo1("../../Data/eventos.txt");
+        //leerArchivo1("eventos.txt");
         leerArchivo2("asistentes.txt");
         for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Asistente* asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
         } 
+        menuPrincipal();
+
         Evento *e = new Evento("Movistar Arena",25,10);
         cout << "evento creado"<< endl;
-        //delete e;
+        delete e;
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     

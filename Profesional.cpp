@@ -12,5 +12,5 @@ Profesional::~Profesional(){}
 
 string Profesional::mostrarInformacion()
 {
-   return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Ocupación: "+ocupacion+ "en "+empresa; 
+   return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Ocupación: "+ocupacion+ " en "+empresa; 
 }
