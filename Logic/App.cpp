@@ -117,6 +117,7 @@ void menuPrincipal(){
     cout << "Bienvenido al menú de Gestión de Eventos" << endl;
     cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl; int opcion;
     cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Generar informes"<<endl;
+    cout << "Opción: ";
     do {
         cin>>opcion;
         switch (opcion)
