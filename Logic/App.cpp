@@ -172,6 +172,13 @@ void leerArchivo2(string rutaTxt){
         while(getline(ss,parte,'/')){
             partes.push_back(parte);
         }
+
+        for(int i = 0; i < partes.size(); i++){
+            cout << partes[i] << " ";
+        }
+        cout << "\n";
+
+
         string tipo = partes[0];
         string nombre = partes[1];
         string dni = partes[2];
@@ -199,7 +206,7 @@ int main(int argc, char const *argv[]) {
     bool status = verificarArchivos("Data/eventos.txt","Data/asistentes.txt");
     if(status != false){
         //leerArchivo1("eventos.txt");
-        leerArchivo2("asistentes.txt");
+        leerArchivo2("Data/asistentes.txt");
         for(size_t i = 0; i < listadoAsistentes.size(); ++i){
             Persona *asistenteActual = listadoAsistentes[i];
             cout << asistenteActual->mostrarInformacion() << endl;
