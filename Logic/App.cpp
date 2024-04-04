@@ -164,6 +164,11 @@ void leerArchivoEventos(string rutaTxt){
         while(getline(ss,parte,'/')){
             partes.push_back(parte);
         }
+
+        string tipo = partes[0];
+        string nombre = partes[1];
+        string dni = partes[2];
+        int edad = stoi(partes[3]);
     }
 }
 
