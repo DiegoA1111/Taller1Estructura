@@ -21,17 +21,68 @@ string toLowerCase(string& cadenaInicial){
     return cadenaFinal;
 }
 
-bool existeEvento(string idEvento){
+void mostrarListadoEventos(){
+    cout << " --- Listado de Eventos del Sistema --- "<<endl;
     for(int i = 0; i < listadoEventos.size(); i++){
-        Evento *evento = listadoEventos[i]; string idObjeto = evento->getId();
-        if(toLowerCase(idObjeto) == toLowerCase(idEvento)){ return true; }
+        Evento *evento = listadoEventos[i];
+        cout <<" "<< i << ")" << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
+    }
+}
+
+bool existeEvento(string idBuscado){
+    for(int i = 0; i < listadoEventos.size(); i++){
+        Evento *evento = listadoEventos[i]; string idEvento = evento->getId();
+        if(toLowerCase(idEvento) == toLowerCase(idBuscado)){ return true; }
     }
     return false;
 }
 
-bool registrarAsistente(){
-    cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl;
+Persona* buscarPersona(string dniBuscado){
+    for(int i = 0; i < listadoAsistentes.size(); i++){
+        Persona *persona = listadoAsistentes[i]; string dniPersona = persona->getDni();
+        if(toLowerCase(dniPersona) == toLowerCase(dniBuscado)){ return persona; }
+    }
+    return nullptr;
+}
 
+bool registrarAsistente(){
+    cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl; string dni; getline(cin,dni);
+    Persona *persona = buscarPersona(dni);
+    if(persona != nullptr){
+        //printf("[i] Persona identificada. Nombre: %s",persona->getNombre());
+        cout << "Persona identificada. Nombre: " << persona->getNombre() <<endl;
+        if(listadoEventos.size() > 0){
+            mostrarListadoEventos();
+            cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
+            int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+        }
+    } else{
+        string ans;
+        cout << "[i] Persona no registrada. ¿Desea ingresarla al sistema? (SI/NO): "<< endl; getline(cin,ans);
+        if(toLowerCase(ans) == "si"){
+            cout << "Indique tipo (Estudiante ó Profesional): "<<endl; string tipo; getline(cin, tipo);
+            cout << "Ingrese nombre: "<<endl; string nombre; getline(cin,nombre);
+            cout << "Ingrese edad: "<<endl; int edad; cin>>edad;
+            if(toLowerCase(tipo) == "estudiante"){
+                cout << "Indique que carrera estudia: "<<endl; string carrera; getline(cin,carrera);
+                cout << "Indique la institución donde estudia: "<<endl; string institucion; getline(cin,institucion);
+                Persona *persona = new Estudiante(nombre,dni,edad,carrera,institucion);
+                if(listadoEventos.size() > 0){
+                mostrarListadoEventos(); cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
+                int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+                }
+            } else if(toLowerCase(tipo) == "profesional"){
+                cout << "Indique su ocupación: "<<endl; string ocupacion; getline(cin,ocupacion);
+                cout << "Indique la empresa/corporación donde trabaja: "<<endl; string empresa; getline(cin,empresa);
+                Persona *persona = new Profesional(nombre,dni,edad,ocupacion,empresa);
+                if(listadoEventos.size() > 0){
+                mostrarListadoEventos(); cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
+                int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+                }
+            }
+        }
+    }
+    return false;
 }
 
 bool crearEvento(){
@@ -72,7 +123,8 @@ void menuPrincipal(){
             if(crearEvento()){ cout << "[i] Evento creado exitosamente."<<endl; } 
             break;
         case 2:
-            registrarAsistente(); break;
+            if(registrarAsistente()){cout << "[i] Asistente agregado exitosamente."; }
+            else{cout << "[!] No se pudo registrar asistente. "<<endl; } break;
         default:
             break;
         }
@@ -135,7 +187,6 @@ void leerArchivo2(string rutaTxt){
             string institucion = partes[5];
             Persona *estudiante = new Estudiante(nombre,dni,edad,carrera,institucion);
             listadoAsistentes.push_back(estudiante);
-            //listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
 
         } else if(toLowerCase(tipo) == "profesional"){
             cout<<"Es profesional"<<endl;
@@ -143,7 +194,6 @@ void leerArchivo2(string rutaTxt){
             string empresa = partes[5];
             Persona *profesional = new Profesional(nombre,dni,edad,ocupacion,empresa);
             listadoAsistentes.push_back(profesional);
-            //listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
         }    
     }
 }

@@ -12,4 +12,6 @@ class Persona{
     Persona(string, string, int);
     ~Persona();
     virtual string mostrarInformacion() = 0;
+    string getDni();
+    string getNombre();
 };

@@ -15,5 +15,6 @@ class Evento{
     ~Evento();
     virtual string mostrarInformacion() = 0;
     string getId();
+    bool agregarAsistente(Persona *persona);
 
 };

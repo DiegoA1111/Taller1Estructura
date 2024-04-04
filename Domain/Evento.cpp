@@ -14,3 +14,8 @@ string Evento::getId()
 {
     return id;
 }
+
+bool Evento::agregarAsistente(Persona *persona) {
+    if(listadoAsistentes.size() < capacidad) { listadoAsistentes.push_back(persona); return true; }
+    return false;
+}
