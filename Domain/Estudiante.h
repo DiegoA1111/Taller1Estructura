@@ -9,7 +9,7 @@ class Estudiante : public Persona{
     string carrera;
     string institucion;
     public:
-    Estudiante(string, int, string, string);
+    Estudiante(string, string, int, string, string);
     ~Estudiante();
     string mostrarInformacion();
 

@@ -9,7 +9,7 @@ class Profesional : public Persona{
     string ocupacion;
     string empresa;
     public:
-    Profesional(string, int, string, string);
+    Profesional(string, string, int, string, string);
     ~Profesional();
     string mostrarInformacion();
 

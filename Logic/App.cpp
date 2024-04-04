@@ -30,7 +30,8 @@ bool existeEvento(string idEvento){
 }
 
 bool registrarAsistente(){
-    cout<< "Ingrese DNI: " << endl;
+    cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl;
+
 }
 
 bool crearEvento(){
@@ -125,23 +126,24 @@ void leerArchivo2(string rutaTxt){
         }
         string tipo = partes[0];
         string nombre = partes[1];
-        int edad = stoi(partes[2]);
+        string dni = partes[2];
+        int edad = stoi(partes[3]);
 
         if(toLowerCase(tipo) == "estudiante"){
             cout<<"Es estudiante" <<endl;
-            string carrera = partes[3];
-            string institucion = partes[4];
-            Persona *estudiante = new Estudiante(nombre,edad,carrera,institucion);
+            string carrera = partes[4];
+            string institucion = partes[5];
+            Persona *estudiante = new Estudiante(nombre,dni,edad,carrera,institucion);
             listadoAsistentes.push_back(estudiante);
-            listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
+            //listadoAsistentes.push_back(new Estudiante(nombre,edad,carrera,institucion));
 
         } else if(toLowerCase(tipo) == "profesional"){
             cout<<"Es profesional"<<endl;
-            string ocupacion = partes[3];
-            string empresa = partes[4];
-            Persona *profesional = new Profesional(nombre,edad,ocupacion,empresa);
+            string ocupacion = partes[4];
+            string empresa = partes[5];
+            Persona *profesional = new Profesional(nombre,dni,edad,ocupacion,empresa);
             listadoAsistentes.push_back(profesional);
-            listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
+            //listadoAsistentes.push_back(new Profesional(nombre,edad,ocupacion,empresa));
         }    
     }
 }

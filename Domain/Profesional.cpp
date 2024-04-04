@@ -3,7 +3,7 @@
 using namespace std;
 
 
-Profesional::Profesional(string nombre, int edad, string ocupacion, string empresa) : Persona(dni, nombre, edad) {
+Profesional::Profesional(string nombre, string dni ,int edad, string ocupacion, string empresa) : Persona(dni, nombre, edad) {
     this->ocupacion = ocupacion;
     this->empresa = empresa;
 }
