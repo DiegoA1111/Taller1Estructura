@@ -184,10 +184,17 @@ void infEventoParticular(){
     if(listadoEventos.size()>0){
         cout << "Indique el número del siguiente listado de eventos (desde 1 a N): "<<endl; int posicion;
         mostrarListadoEventos(); cout << "Posicion: "; cin>>posicion;
-        Evento *evento = listadoEventos[posicion-1]; evento->mostrarInformacion();
-
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            Evento *evento = listadoEventos[posicion-1]; 
+            archivo << evento->mostrarInformacion(); archivo.close();
+        } else{
+            cout <<"[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+        }
     }
-    
 }
 
 void submenuInformes(){
@@ -212,9 +219,7 @@ void submenuInformes(){
         case 5:
             infEventoParticular();
             break;
-    
     }
-
 }
 
 void menuPrincipal(){

@@ -3,7 +3,7 @@ Profesional/Maria Ramirez/167940210/40/Abogada/Banco Santander
 Estudiante/Pedro Gomez/213657022/22/Psicología/Universidad Nacional Autónoma de México
 Profesional/Laura Martinez/168599508/38/Médico/Hospital Regional
 Estudiante/Fernando Perez/199650210K/30/Derecho/Universidad de Buenos Aires
-Profesional/Ana Silva/16301752K/45/Arquitecta/Constructora ABC
+Profesional/Ana Silva/16301752K/45/Arquitecto/Constructora ABC
 Profesional/Elena Vargas/167603190/42/Contadora/PwC
 Profesional/Carolina Rodriguez/197103444/32/Periodista/Canal 13
 Profesional/Jose Caupolican/164001231/34/Ingeniero/CODELCO

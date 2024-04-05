@@ -10,5 +10,4 @@ class Conferencia : public Evento{
     public:
     Conferencia(string,string,int,int,string,string);
     string mostrarInformacion();
-
 };
