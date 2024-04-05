@@ -115,32 +115,53 @@ bool registrarAsistente(){
 bool crearEvento(){
     cout << "Indique tipo de evento (Concierto/Conferencia): "; string tipo;
     getline(cin,tipo);
-    cout << "Ingrese un id único para el evento: "<<endl; string id; getline(cin,id);
-    if(existeEvento(id)){
-        cout << "[!] Un evento con esa ID ya existe."<<endl;
+    if(toLowerCase(tipo) != "concierto" && toLowerCase(tipo) != "conferencia"){
+        cout << "[!] Tipo de evento indicado no existe. "<<endl;;
     } else{
-        string ubicacion; int duracion, capacidad;
-        cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
-        cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
-        cin.ignore();
-        cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
-        cin.ignore();
+        cout << "Ingrese un id único para el evento: "<<endl; string id; getline(cin,id);
+        if(existeEvento(id)){
+            cout << "[!] Un evento con esa ID ya existe."<<endl;
+        } else{
+            string ubicacion; int duracion, capacidad;
+            cout << "Ingrese ubicación del evento: " << endl; getline(cin,ubicacion);
+            cout << "Ingrese la duración en minutos del evento: " <<endl; cin>>duracion;
+            cin.ignore();
+            cout << "Ingrese la capacidad de asistentes del evento: " <<endl; cin>>capacidad;
+            cin.ignore();
+            Evento *evento = nullptr;
 
-        if(toLowerCase(tipo) == "concierto"){ string artista;
-            cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
-            Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista); 
-            listadoEventos.push_back(evento); 
-            return true;
+            if(toLowerCase(tipo) == "concierto"){ string artista;
+                cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
+                evento = new Concierto(id,ubicacion,duracion,capacidad,artista);
+                listadoEventos.push_back(evento);
+                fstream file("Data/eventos.txt", ios::app);                                 
+                if(file.is_open()){
+                    file <<"\n"<<id<<"/Concierto/"<<ubicacion<<"/"<<to_string(duracion)<<"/"<<to_string(capacidad)<<"/"<<artista;
+                    file.close();
+                    cout << "[i] Informacion Guardada" << endl;
+                } else{
+                    cout << "[!] No se puede abrir el archivo. Revise la ruta" << endl;
+                }
 
-        } else if(toLowerCase(tipo) == "conferencia"){
-            string orador, tema;
-            cout << "Ingrese el nombre del/la orador(a): " <<endl; getline(cin,orador);
-            cout << "Ingrese el tema del evento: " << endl; getline(cin,tema);
-            Evento *evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
-            listadoEventos.push_back(evento); 
+
+            } else if(toLowerCase(tipo) == "conferencia"){
+                string orador, tema;
+                cout << "Ingrese el nombre del/la orador(a): " <<endl; getline(cin,orador);
+                cout << "Ingrese el tema del evento: " << endl; getline(cin,tema);
+                evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
+                listadoEventos.push_back(evento);
+                ofstream file("Data/eventos.txt", ios::app);                                 
+                if(file.is_open()){
+                    file <<"\n"<<id<<"/Conferencia/"<<ubicacion<<"/"<<to_string(duracion)<<"/"<<to_string(capacidad)<<"/"<<orador<<"/"<<tema;
+                    file.close();
+                    cout << "[i] Informacion Guardada" << endl;
+                } else{
+                    cout << "[!] No se puede abrir el archivo. Revise la ruta" << endl;
+                }
+            }
             return true;
-        }
-    }        
+        }  
+    }      
     return false;
 }
 
