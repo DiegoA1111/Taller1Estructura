@@ -14,6 +14,7 @@ class Evento{
     Evento(string id,string ubicacion, int duracion, int capacidad);
     ~Evento();
     virtual string mostrarInformacion() = 0;
+    string mostrarInformacionAsistentes();
     string getId();
     bool agregarAsistente(Persona *persona);
 

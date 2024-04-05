@@ -8,5 +8,5 @@ Conferencia::Conferencia(string id, string ubicacion, int duracion, int capacida
 
 string Conferencia::mostrarInformacion()
 {
-    return "Conferencia | Orador: "+ orador + ", tema: " +tema;
+    return "[Conferencia] Orador: "+orador+", duración del evento: "+to_string(duracion)+" minutos. Tema: "+ tema +" ubicación: "+ubicacion;
 }

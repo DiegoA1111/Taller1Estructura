@@ -1,0 +1,32 @@
+1) [Concierto] Artista: Rihanna, duración del evento: 240 minutos. Ubicación: Estadio la Florida
+    No hay asistentes.
+2) [Conferencia] Orador: Jose Roman, duración del evento: 60 minutos. Tema: Inteligencia Artificial ubicación: Teatro Caroca
+    Nombre: Elena Vargas, edad: 42 años. Ocupación: Contadora en PwC
+    Nombre: Carolina Rodriguez, edad: 32 años. Ocupación: Periodista en Canal 13
+    Nombre: Fernando Perez, edad: 30 años. Estudiante de Derecho en Universidad de Buenos Aires
+    Nombre: Sebastian Lopez, edad: 29 años. Estudiante de Kinesiología en Universidad del Mar
+
+3) [Concierto] Artista: Adele, duración del evento: 120 minutos. Ubicación: Estadio Nacional
+    Nombre: Jose Caupolican, edad: 34 años. Ocupación: Ingeniero en CODELCO
+    Nombre: Laura Martinez, edad: 38 años. Ocupación: Médico en Hospital Regional
+    Nombre: Maria Ramirez, edad: 40 años. Ocupación: Abogada en Banco Santander
+    Nombre: Ana Silva, edad: 45 años. Ocupación: Arquitecta en Constructora ABC
+
+4) [Conferencia] Orador: Emily Watson, duración del evento: 90 minutos. Tema: Neurociencia y Emoción ubicación: Centro de Convenciones
+    No hay asistentes.
+5) [Concierto] Artista: Charli XCX, duración del evento: 80 minutos. Ubicación: Movistar Arena
+    Nombre: Pedro Gomez, edad: 22 años. Estudiante de Psicología en Universidad Nacional Autónoma de México
+    Nombre: Fernando Perez, edad: 30 años. Estudiante de Derecho en Universidad de Buenos Aires
+    Nombre: Elena Vargas, edad: 42 años. Ocupación: Contadora en PwC
+    Nombre: Sebastian Lopez, edad: 29 años. Estudiante de Kinesiología en Universidad del Mar
+
+6) [Concierto] Artista: Beyoncé, duración del evento: 120 minutos. Ubicación: Auditorio Nacional
+    No hay asistentes.
+7) [Conferencia] Orador: Carlos Martínez, duración del evento: 45 minutos. Tema: Desarrollo Sostenible ubicación: Universidad de Santiago
+    Nombre: Jose Caupolican, edad: 34 años. Ocupación: Ingeniero en CODELCO
+    Nombre: Sebastian Lopez, edad: 29 años. Estudiante de Kinesiología en Universidad del Mar
+    Nombre: Pedro Gomez, edad: 22 años. Estudiante de Psicología en Universidad Nacional Autónoma de México
+    Nombre: Maria Ramirez, edad: 40 años. Ocupación: Abogada en Banco Santander
+
+8) [Concierto] Artista: Coldplay, duración del evento: 150 minutos. Ubicación: Parque de la Ciudad
+    No hay asistentes.

@@ -1,0 +1,8 @@
+1) [Concierto] Artista: Rihanna, duración del evento: 240 minutos. Ubicación: Estadio la Florida
+2) [Conferencia] Orador: Jose Roman, duración del evento: 60 minutos. Tema: Inteligencia Artificial ubicación: Teatro Caroca
+3) [Concierto] Artista: Adele, duración del evento: 120 minutos. Ubicación: Estadio Nacional
+4) [Conferencia] Orador: Emily Watson, duración del evento: 90 minutos. Tema: Neurociencia y Emoción ubicación: Centro de Convenciones
+5) [Concierto] Artista: Charli XCX, duración del evento: 80 minutos. Ubicación: Movistar Arena
+6) [Concierto] Artista: Beyoncé, duración del evento: 120 minutos. Ubicación: Auditorio Nacional
+7) [Conferencia] Orador: Carlos Martínez, duración del evento: 45 minutos. Tema: Desarrollo Sostenible ubicación: Universidad de Santiago
+8) [Concierto] Artista: Coldplay, duración del evento: 150 minutos. Ubicación: Parque de la Ciudad

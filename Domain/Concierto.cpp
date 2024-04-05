@@ -9,6 +9,6 @@ Concierto::Concierto(string id, string ubicacion, int duracion, int capacidad, s
 Concierto::~Concierto(){}
 
 string Concierto::mostrarInformacion()  {
-    return "Concierto | Artista invitado: " + artista;
+    return "[Concierto] Artista: "+artista+", duración del evento: "+to_string(duracion)+" minutos. Ubicación: "+ubicacion;
 }
     

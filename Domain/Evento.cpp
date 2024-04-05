@@ -10,6 +10,17 @@ Evento::Evento(string id, string ubicacion, int duracion, int capacidad) {
 
 Evento::~Evento(){}
 
+string Evento::mostrarInformacionAsistentes() {
+    string cadena;
+    if(listadoAsistentes.size() > 0){
+        for(int i = 0; i < listadoAsistentes.size(); i++){
+            Persona *persona = listadoAsistentes[i];
+            cadena += "    " + persona->mostrarInformacion() + "\n";
+        }
+    } else{ cadena = "    No hay asistentes."; }
+    return cadena;
+}
+
 string Evento::getId()
 {
     return id;

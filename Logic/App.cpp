@@ -71,7 +71,7 @@ bool registrarAsistente(){
         cout << "Persona identificada. Nombre: " << persona->getNombre() <<endl;
         if(listadoEventos.size() > 0){
             mostrarListadoEventos();
-            cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
+            cout << "Indique el número del Evento de la lista para asignación de asistente (desde 1 hasta N): "<<endl;
             int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
         }
     } else{
@@ -133,12 +133,87 @@ bool crearEvento(){
     return false;
 }
 
+void infListaAsistentes(){
+    if(listadoEventos.size()>0){
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            for(int i = 0; i < listadoEventos.size(); i++){
+                Evento *evento = listadoEventos[i];
+                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
+                string infoAsistentes = evento->mostrarInformacionAsistentes();
+                archivo << infoAsistentes << "\n";
+            }
+            archivo.close();
+        } else{
+            cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+        }
+    }
+}
+
+void infListaEventos(){
+    if(listadoEventos.size()>0){
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            for(int i = 0; i < listadoEventos.size(); i++){
+                Evento *evento = listadoEventos[i];
+                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
+            }
+            archivo.close();
+        }
+    } else{
+        cout <<"[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+    }
+}
+
+void infEventoParticular(){
+    if(listadoEventos.size()>0){
+        cout << "Indique el número del siguiente listado de eventos (desde 1 a N): "<<endl; int posicion;
+        mostrarListadoEventos(); cout << "Posicion: "; cin>>posicion;
+        Evento *evento = listadoEventos[posicion-1]; evento->mostrarInformacion();
+
+    }
+    
+}
+
+void submenuInformes(){
+    cout << " --- Generar Informes --- " << endl; int opcion;
+    cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl;
+    cout << "1) Informe de listado de eventos \n2) Informe de listado de asistentes por cada evento \n3) Informe estadísticas de asistencia"<<endl;
+    cout << "4) Informe de detalle de asistentes \n5) Informe sobre evento en particular"<<endl;
+    cout << "Opción: "; cin >> opcion; cin.ignore();
+    switch(opcion){
+        case 1:
+            infListaEventos();
+            break;
+        case 2:
+            infListaAsistentes();
+            break;
+        case 3:
+            //infEstadisticasAsist();
+            break;
+        case 4:
+            //infDetalleAsist();
+            break;
+        case 5:
+            infEventoParticular();
+            break;
+    
+    }
+
+}
+
 void menuPrincipal(){
     int opcion;
     do {
         cout << "Bienvenido al menú de Gestión de Eventos" << endl;
         cout <<"Por favor, ingrese una de las siguientes opciones (Para finalizar digite '0'): "<<endl;
-        cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de asistentes \n4) Revisar listado de EVENTOS \n5) Generar informes"<<endl;
+        cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de ASISTENTES \n4) Revisar listado de EVENTOS \n5) Generar informes"<<endl;
         cout << "Opción: ";
         cin>>opcion; cin.ignore();
         switch (opcion)
@@ -155,6 +230,7 @@ void menuPrincipal(){
             mostrarListadoEventos();
             break;
         case 5:
+            submenuInformes();
             break;
         }
 
@@ -178,10 +254,8 @@ bool verificarArchivos(string rutaTxt, string ruta2Txt, string ruta3Txt){
 void leerArchivoEventos(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
-    
 
     while(getline(file,line)){
-        //cout << "JSAJKSASLKJAHSJA" << endl;
         vector <string> partes;
         stringstream ss(line);
         string parte;
@@ -190,11 +264,8 @@ void leerArchivoEventos(string rutaTxt){
             partes.push_back(parte);
         }
 
-        string id = partes[0];
-        string tipo = partes[1];
-        string ubicacion = partes[2];
-        int duracion = stoi(partes[3]);
-        int capacidad = stoi(partes[4]);
+        string id = partes[0]; string tipo = partes[1]; string ubicacion = partes[2];
+        int duracion = stoi(partes[3]); int capacidad = stoi(partes[4]);
         if(toLowerCase(tipo) == "concierto") {
             string artista = partes[5];
             Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista);
@@ -204,7 +275,6 @@ void leerArchivoEventos(string rutaTxt){
             Evento *evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
             listadoEventos.push_back(evento);
         }
-        //  id tipo ubicacion duracion capacidad Atributo diferencial: artista y orador-tema
     }
 }
 
@@ -220,25 +290,18 @@ void leerArchivoAsistentes(string rutaTxt){
             partes.push_back(parte);
         }
 
-        /*for(int i = 0; i < partes.size(); i++){
-            cout << partes[i] << " ";
-        }
-        cout << "\n"; */
-
         string tipo = partes[0];
         string nombre = partes[1];
         string dni = partes[2];
         int edad = stoi(partes[3]);
 
         if(toLowerCase(tipo) == "estudiante"){
-            // cout<<"Es estudiante" <<endl;
             string carrera = partes[4];
             string institucion = partes[5];
             Persona *estudiante = new Estudiante(nombre,dni,edad,carrera,institucion);
             listadoAsistentes.push_back(estudiante);
 
         } else if(toLowerCase(tipo) == "profesional"){
-            // cout<<"Es profesional"<<endl;
             string ocupacion = partes[4];
             string empresa = partes[5];
             Persona *profesional = new Profesional(nombre,dni,edad,ocupacion,empresa);
@@ -251,7 +314,6 @@ void leerArchivoAsistencia(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
-        //cout << "LINEA" << endl;
         vector <string> partes;
         stringstream ss(line);
         string parte;
@@ -261,15 +323,11 @@ void leerArchivoAsistencia(string rutaTxt){
         }
 
         string id = partes[0]; Evento *evento = buscarEvento(id);
-        //cout << evento->mostrarInformacion() << endl;
         if(evento != nullptr){
             for(int i = 1; i < partes.size(); i++){
-                //cout << "partes -->>" << partes[i] <<endl;
                 string dni = partes[i]; Persona *persona = buscarPersona(dni);
-                //cout << " " << persona->mostrarInformacion() << endl;
                 if(persona != nullptr){
                     evento->agregarAsistente(persona);
-                    //cout<<"Asistente agregado "<<endl;
                 }
             }
         }
@@ -282,13 +340,7 @@ int main(int argc, char const *argv[]) {
         leerArchivoEventos("Data/eventos.txt");
         leerArchivoAsistentes("Data/asistentes.txt");
         leerArchivoAsistencia("Data/listadoAsistencia.txt");
-
-        mostrarListadoPersonas();
-        /* for(size_t i = 0; i < listadoAsistentes.size(); ++i){
-            Persona *asistenteActual = listadoAsistentes[i];
-            cout << asistenteActual->mostrarInformacion() << endl;
-        } */
-        
+        //mostrarListadoPersonas();
         menuPrincipal();
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
