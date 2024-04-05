@@ -17,6 +17,15 @@ using namespace std;
 vector <Evento*> listadoEventos = vector <Evento*>();
 vector <Persona*> listadoAsistentes = vector <Persona*>();
 
+void destruirObjetos(){
+    for(int j = 0; j < listadoAsistentes.size(); j++){
+        Persona *persona = listadoAsistentes[j]; delete persona;
+    }
+    for(int i = 0; i < listadoEventos.size(); i++){
+        Evento *evento = listadoEventos[i]; delete evento;
+    }
+}
+
 string toLowerCase(string& cadenaInicial){
     string cadenaFinal;
     for(char c: cadenaInicial){ cadenaFinal += tolower(c); }
@@ -342,6 +351,7 @@ int main(int argc, char const *argv[]) {
         leerArchivoAsistencia("Data/listadoAsistencia.txt");
         //mostrarListadoPersonas();
         menuPrincipal();
+        destruirObjetos();
     
     } else { cout << "[!] Archivo(s) no encontrado(s), revise la ruta especificada e intente nuevamente." << endl; }
     
