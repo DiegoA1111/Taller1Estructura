@@ -12,5 +12,9 @@ class Profesional : public Persona{
     Profesional(string, string, int, string, string);
     ~Profesional();
     string mostrarInformacion();
+    string getOcupacion();
+    string getAtributoDiferencial1() override;
+    string getTipo() override;
+    int getEdad() override;
 
 };

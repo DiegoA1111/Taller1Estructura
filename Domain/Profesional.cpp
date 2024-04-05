@@ -14,3 +14,22 @@ string Profesional::mostrarInformacion()
 {
    return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Ocupación: "+ocupacion+ " en "+empresa; 
 }
+
+string Profesional::getOcupacion()
+{
+    return ocupacion;
+}
+
+string Profesional::getAtributoDiferencial1()
+{
+    return ocupacion;
+}
+
+string Profesional::getTipo()
+{
+    return "Profesional";
+}
+
+int Profesional::getEdad() {
+    return edad;
+}

@@ -13,3 +13,17 @@ string Estudiante::mostrarInformacion()
 {
     return "Nombre: "+nombre+", edad: "+to_string(edad)+" años. Estudiante de "+carrera+" en "+institucion; 
 }
+
+string Estudiante::getAtributoDiferencial1()
+{
+    return carrera;
+}
+
+string Estudiante::getTipo()
+{
+    return "Estudiante";
+}
+
+int Estudiante::getEdad() {
+    return edad;
+}

@@ -10,10 +10,10 @@ Persona::Persona(string nombre, string dni, int edad){
 
 Persona::~Persona(){}
 
-string Persona::getDni() {
+string Persona::getDni()
+{
     return dni;
 }
-
 string Persona::getNombre(){
     return nombre;
 }

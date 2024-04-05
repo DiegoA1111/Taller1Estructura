@@ -129,17 +129,86 @@ bool crearEvento(){
         if(toLowerCase(tipo) == "concierto"){ string artista;
             cout << "Ingrese el nombre del/la artista o banda: " <<endl; getline(cin,artista);
             Evento *evento = new Concierto(id,ubicacion,duracion,capacidad,artista); 
-            listadoEventos.push_back(evento); return true;
+            listadoEventos.push_back(evento); 
+            return true;
 
         } else if(toLowerCase(tipo) == "conferencia"){
             string orador, tema;
             cout << "Ingrese el nombre del/la orador(a): " <<endl; getline(cin,orador);
             cout << "Ingrese el tema del evento: " << endl; getline(cin,tema);
             Evento *evento = new Conferencia(id,ubicacion,duracion,capacidad,orador,tema);
-            listadoEventos.push_back(evento); return true;
+            listadoEventos.push_back(evento); 
+            return true;
         }
     }        
     return false;
+}
+
+int calcularPromedioEdades(){
+    int sumaEdades;
+    for(Persona *persona: listadoAsistentes){ sumaEdades += persona->getEdad(); }
+    return sumaEdades;
+}
+
+double calcularPromedioEdades(string tipoEntregado) {
+    int totalEdades = 0;
+    int cantidad = 0;
+    if(listadoAsistentes.size() > 0){
+        for (Persona *persona : listadoAsistentes) {
+            string type = persona->getTipo();
+            if (toLowerCase(type) == toLowerCase(tipoEntregado)) {
+                totalEdades += persona->getEdad();
+                cantidad++;
+           }
+        }
+        return static_cast<float>(totalEdades)/cantidad;
+    }
+    return -1;
+}
+
+string ocupacionMasComun(){
+    if(listadoAsistentes.size() > 0){
+        for (Persona *persona : listadoAsistentes) {
+            string tipo = persona->getTipo(); string type = "Profesional";
+            if (toLowerCase(tipo) == toLowerCase(type)) {
+                persona->getAtributoDiferencial1();
+            }
+        } 
+        return "a";
+    }
+}
+
+string carreraMasComun(){
+
+}
+
+void infEstadisticasAsist(){
+    if(listadoAsistentes.size() > 0){
+        int promedio = calcularPromedioEdades()/listadoAsistentes.size();
+        double promedioEdadesEstudiantes = calcularPromedioEdades("Estudiante");
+        double promedioEdadesProfesionales = calcularPromedioEdades("Profesional");
+        double promedioEdadesGeneral = (promedioEdadesEstudiantes + promedioEdadesProfesionales) /2;
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            if(promedioEdadesEstudiantes == -1){ archivo << "No hay asistentes"<<"\n"; }
+            else{ 
+                archivo << "La edad promedio de todos los asistentes es: "<< promedioEdadesGeneral << "\n";
+                if(promedioEdadesEstudiantes == -1 ){ archivo << "No hay estudiantes" << "\n"; }
+                else { archivo << "La edad promedio de todos los Estudiantes es: "<< promedioEdadesEstudiantes << "\n"; }
+                if(promedioEdadesProfesionales == -1) { archivo << "No hay profesionales" << "\n";}
+                else { archivo << "La edad promedio de todos los Profesionales es: "<< promedioEdadesProfesionales << "\n"; }
+            }            
+            archivo.close();
+        } else{
+            cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+        }
+
+    } else{
+        cout <<"[!] El listado de asistentes está vacío."<< endl;
+    }    
 }
 
 void infListaAsistentes(){
@@ -159,6 +228,8 @@ void infListaAsistentes(){
         } else{
             cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
         }
+    } else{
+        cout << "[!] El listado de Eventos está vacío.";
     }
 }
 
@@ -183,7 +254,7 @@ void infListaEventos(){
 void infEventoParticular(){
     if(listadoEventos.size()>0){
         cout << "Indique el número del siguiente listado de eventos (desde 1 a N): "<<endl; int posicion;
-        mostrarListadoEventos(); cout << "Posicion: "; cin>>posicion;
+        mostrarListadoEventos(); cout << "Posicion: "; cin>>posicion; cin.ignore();
         cout << "Ingrese nombre del archivo .txt: "<<endl; 
         cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
         cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
@@ -211,7 +282,7 @@ void submenuInformes(){
             infListaAsistentes();
             break;
         case 3:
-            //infEstadisticasAsist();
+            infEstadisticasAsist();
             break;
         case 4:
             //infDetalleAsist();
@@ -230,8 +301,7 @@ void menuPrincipal(){
         cout << "1) Crear nuevo evento \n2) Registrar asistente \n3) Consultar listado de ASISTENTES \n4) Revisar listado de EVENTOS \n5) Generar informes"<<endl;
         cout << "Opción: ";
         cin>>opcion; cin.ignore();
-        switch (opcion)
-        {
+        switch (opcion) {
         case 1:
             if(crearEvento()){ cout << "[i] Evento creado exitosamente."<<endl; } 
             break;
@@ -247,7 +317,6 @@ void menuPrincipal(){
             submenuInformes();
             break;
         }
-
     } while (opcion != 0);
 }
 
