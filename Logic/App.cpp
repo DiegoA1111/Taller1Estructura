@@ -99,12 +99,7 @@ void obtenerFrecuenciaX(){
             frecuencias[index]++;
         }
     }
-
-    
-
-
 }
-
 
 bool registrarAsistente(){
     cout<< "Para registrar un asistente a evento, por favor ingrese DNI: " << endl; string dni; getline(cin,dni);
@@ -114,7 +109,25 @@ bool registrarAsistente(){
         if(listadoEventos.size() > 0){
             mostrarListadoEventos();
             cout << "Indique el número del Evento de la lista para asignación de asistente (desde 1 hasta N): "<<endl;
-            int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+            int indice; cin>> indice; 
+            while(indice <= 0 || indice >= listadoEventos.size()){
+                cout << "Indice inválido. Intente nuevamente. " << endl;
+                cin >> indice;
+            }
+            cin.ignore();
+            Evento *evento = listadoEventos.at(indice-1); 
+            if(evento->agregarAsistente(persona)){
+                ifstream inFile("listaAsistencia.txt");
+                vector<string> lines;
+                if (inFile.is_open()) {
+                    string line;
+                    while (getline(inFile, line)) {
+                        lines.push_back(line);
+                    }
+                    inFile.close();
+                }
+                return true;
+            }
         }
     } else{
         string ans;
@@ -122,14 +135,21 @@ bool registrarAsistente(){
         if(toLowerCase(ans) == "si"){
             cout << "Indique tipo (Estudiante ó Profesional): "<<endl; string tipo; getline(cin, tipo);
             cout << "Ingrese nombre: "<<endl; string nombre; getline(cin,nombre);
-            cout << "Ingrese edad: "<<endl; int edad; cin>>edad;
+            cout << "Ingrese edad: "<<endl; int edad; cin>>edad; cin.ignore();
             if(toLowerCase(tipo) == "estudiante"){
                 cout << "Indique que carrera estudia: "<<endl; string carrera; getline(cin,carrera);
                 cout << "Indique la institución donde estudia: "<<endl; string institucion; getline(cin,institucion);
                 Persona *persona = new Estudiante(nombre,dni,edad,carrera,institucion);
                 if(listadoEventos.size() > 0){
                 mostrarListadoEventos(); cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
-                int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+                int indice; cin>> indice; 
+                while(indice <= 0 || indice >= listadoEventos.size()){
+                    cout << "Indice inválido. Intente nuevamente. " << endl;
+                    cin >> indice;
+                }
+                cin.ignore();
+                Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){
+                    cout << "[i] Asistente agregado con éxito."<<endl; return true;}
                 }
             } else if(toLowerCase(tipo) == "profesional"){
                 cout << "Indique su ocupación: "<<endl; string ocupacion; getline(cin,ocupacion);
@@ -137,13 +157,97 @@ bool registrarAsistente(){
                 Persona *persona = new Profesional(nombre,dni,edad,ocupacion,empresa);
                 if(listadoEventos.size() > 0){
                 mostrarListadoEventos(); cout << "Indique el número del Evento de la lista para asignación de asistente (Ej: 1): "<<endl;
-                int indice; cin>> indice; Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){return true;}
+                int indice; cin>> indice; 
+                while(indice <= 0 || indice >= listadoEventos.size()){
+                    cout << "Indice inválido. Intente nuevamente. " << endl;
+                    cin >> indice;
+                } 
+                cin.ignore();
+                Evento *evento = listadoEventos.at(indice-1); if(evento->agregarAsistente(persona)){ 
+                    cout << "[i] Asistente agregado con éxito."<<endl; return true;}
                 }
             }
+        } else{
+            cout << "[i] No se efectuaron cambios. "<<endl;
         }
     }
     return false;
 }
+
+void registrarAsistenteAEvento() {
+    // Mostrar eventos disponibles con sus IDs
+    cout << "Seleccione el evento al que desea registrarse:" << endl;
+    mostrarListadoEventos();
+
+    // Solicitar al usuario que elija un evento por su ID
+    int indexEvento;
+    cout << "Ingrese el número correspondiente al evento: ";
+    cin >> indexEvento;
+
+    // Validar la entrada del usuario
+    if (indexEvento < 0 || indexEvento >= listadoEventos.size()) {
+        cout << "Número de evento no válido. Volviendo al menú principal." << endl;
+        return;
+    }
+
+    // Mostrar información del evento seleccionado
+    cout << "Registrándose al siguiente evento:" << endl;
+    cout << "ID: " << listadoEventos[indexEvento]->getId() << ", " << listadoEventos[indexEvento]->mostrarInformacion() << endl;
+
+    // Solicitar al usuario que ingrese el DNI del asistente
+    string dniAsistente;
+    cout << "Ingrese el DNI del asistente que desea registrar: ";
+    cin >> dniAsistente;
+
+    Persona* asistente = nullptr;
+    for (const auto& p : listadoAsistentes) {
+        string dni = p->getDni();
+        if (toLowerCase(dni) == toLowerCase(dniAsistente)) {
+            asistente = p;
+            break;
+        }
+    }
+
+    if (asistente != nullptr) {
+        listadoEventos[indexEvento]->agregarAsistente(asistente);
+        cout << "Asistente registrado exitosamente en el evento." << endl;
+
+        ifstream inFile("listaAsistencia.txt");
+        vector<string> lines;
+        if (inFile.is_open()) {
+            string line;
+            while (getline(inFile, line)) {
+                lines.push_back(line);
+            }
+            inFile.close();
+        }
+
+        bool eventoExistente = false;
+        for (string& line : lines) {
+            if (line.find(listadoEventos[indexEvento]->getId()) != string::npos) {
+                line += "/" + dniAsistente; eventoExistente = true; break;
+            }
+        }
+
+        if (!eventoExistente) {
+            lines.push_back(listadoEventos[indexEvento]->getId() + "/" + dniAsistente);
+        }
+
+        ofstream outFile("listaAsistencia.txt");
+        if (outFile.is_open()) {
+            for (const string& line : lines) {
+                outFile << line << endl;
+            }
+            outFile.close();
+            cout << "Registro actualizado en el archivo de lista de asistencia." << endl;
+        } else {
+            cout << "No se pudo abrir el archivo de lista de asistencia para actualizar el registro." << endl;
+        }
+    } else {
+        cout << "No se encontró ningún asistente con el DNI proporcionado." << endl;
+    }
+}
+
 
 bool crearEvento(){
     cout << "Indique tipo de evento (Concierto/Conferencia): "; string tipo;
@@ -368,10 +472,9 @@ void menuPrincipal(){
             if(crearEvento()){ cout << "[i] Evento creado exitosamente."<<endl; } 
             break;
         case 2:
-            if(registrarAsistente()){cout << "[i] Asistente agregado exitosamente."; }
-            else{cout << "[!] No se pudo registrar asistente. "<<endl; } break;
+            registrarAsistenteAEvento(); break;
         case 3:
-
+            
             break;
         case 4:
             mostrarListadoEventos();
