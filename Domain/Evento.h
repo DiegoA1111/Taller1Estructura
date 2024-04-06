@@ -13,7 +13,11 @@ class Evento{
     public:
     Evento(string id,string ubicacion, int duracion, int capacidad);
     ~Evento();
+    virtual string getTipo() = 0;
     virtual string mostrarInformacion() = 0;
+    int getCantidadAsistentes();
+    int obtenerPromedioAsistentes();
+    int obtenerPorcentajeAsistencia();
     string mostrarInformacionAsistentes();
     string getId();
     bool agregarAsistente(Persona *persona);

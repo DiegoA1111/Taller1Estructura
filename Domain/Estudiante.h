@@ -13,7 +13,6 @@ class Estudiante : public Persona{
     ~Estudiante();
     string mostrarInformacion();
     string getAtributoDiferencial1() override;
-    string getCarrera();
     string getTipo() override;
     int getEdad() override;
 

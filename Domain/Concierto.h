@@ -9,5 +9,6 @@ class Concierto : public Evento{
     public:
     Concierto(string, string, int, int, string );
     ~Concierto();
+    string getTipo() override;
     string mostrarInformacion();
 };

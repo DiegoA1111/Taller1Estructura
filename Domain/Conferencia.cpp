@@ -10,3 +10,8 @@ string Conferencia::mostrarInformacion()
 {
     return "[Conferencia] Id evento: "+id+" Orador: "+orador+", duración del evento: "+to_string(duracion)+" minutos. Tema: "+ tema +" ubicación: "+ubicacion;
 }
+
+string Conferencia::getTipo()
+{
+    return "Conferencia";
+}

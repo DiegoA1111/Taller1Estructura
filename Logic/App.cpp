@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <limits>
+#include <algorithm>
 #include <sstream>
 #include <vector>
 #include "../Domain/Evento.h"
@@ -70,6 +71,28 @@ Evento* buscarEvento(string idBuscado){
         if(toLowerCase(idBuscado) == toLowerCase(idEvento)){ return evento; }
     }
     return nullptr;
+}
+
+void obtenerFrecuenciaX(){
+    vector<string> nombres = {"Ingeniero","Medico","Abogado","Ingenerio","Psicologo","Ingeniero","Medico"};
+    vector<int> frecuencias(nombres.size(),0);
+        vector<string> unicos;
+
+   for (string nombre : nombres) {
+        vector<string>::iterator iterador = find(unicos.begin(), unicos.end(), nombre);
+
+        if (iterador == unicos.end()) {
+            unicos.push_back(nombre);
+            frecuencias[unicos.size() - 1]++;
+        } else {
+            int index = distance(unicos.begin(), iterador);
+            frecuencias[index]++;
+        }
+    }
+
+    
+
+
 }
 
 
@@ -203,7 +226,68 @@ string carreraMasComun(){
 
 }
 
+void infListaEventos(){
+    if(listadoEventos.size()>0){
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            for(int i = 0; i < listadoEventos.size(); i++){
+                Evento *evento = listadoEventos[i];
+                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
+            }
+            archivo.close();
+        }
+    } else{
+        cout <<"[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+    }
+}
+
+void infListaAsistentes(){
+    if(listadoEventos.size()>0){
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            for(int i = 0; i < listadoEventos.size(); i++){
+                Evento *evento = listadoEventos[i];
+                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
+                string infoAsistentes = evento->mostrarInformacionAsistentes();
+                archivo << infoAsistentes << "\n";
+            }
+            archivo.close();
+        } else{
+            cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+        }
+    } else{
+        cout << "[!] El listado de Eventos está vacío.";
+    }
+}
+
 void infEstadisticasAsist(){
+    if(listadoEventos.size()>0){
+        cout << "Ingrese nombre del archivo .txt: "<<endl; 
+        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
+        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
+        ofstream archivo("Informes/"+fileName+".txt");
+        if(archivo.is_open()){
+            for(int i = 0; i < listadoEventos.size(); i++){
+                Evento *evento = listadoEventos[i];
+                archivo << to_string(i+1) << ") " << evento->getTipo() << " Id: "<< evento->getId() << "\n";
+                archivo << "    Numero de asistentes: " << evento->getCantidadAsistentes() << "\n";
+                archivo << "    Promedio de asistentes: "<< evento->obtenerPromedioAsistentes() << "\n";
+                archivo << "    Porcentaje de asistencia: " << evento->obtenerPorcentajeAsistencia() << "% \n";
+            }
+            archivo.close();
+        }
+    } else{
+        cout <<"[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
+    }
+}
+
+void infDetalleAsist(){
     if(listadoAsistentes.size() > 0){
         int promedio = calcularPromedioEdades()/listadoAsistentes.size();
         double promedioEdadesEstudiantes = calcularPromedioEdades("Estudiante");
@@ -232,45 +316,6 @@ void infEstadisticasAsist(){
     }    
 }
 
-void infListaAsistentes(){
-    if(listadoEventos.size()>0){
-        cout << "Ingrese nombre del archivo .txt: "<<endl; 
-        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
-        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
-        ofstream archivo("Informes/"+fileName+".txt");
-        if(archivo.is_open()){
-            for(int i = 0; i < listadoEventos.size(); i++){
-                Evento *evento = listadoEventos[i];
-                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
-                string infoAsistentes = evento->mostrarInformacionAsistentes();
-                archivo << infoAsistentes << "\n";
-            }
-            archivo.close();
-        } else{
-            cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
-        }
-    } else{
-        cout << "[!] El listado de Eventos está vacío.";
-    }
-}
-
-void infListaEventos(){
-    if(listadoEventos.size()>0){
-        cout << "Ingrese nombre del archivo .txt: "<<endl; 
-        cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
-        cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
-        ofstream archivo("Informes/"+fileName+".txt");
-        if(archivo.is_open()){
-            for(int i = 0; i < listadoEventos.size(); i++){
-                Evento *evento = listadoEventos[i];
-                archivo << to_string(i+1) << ") " << evento->mostrarInformacion() << "\n";
-            }
-            archivo.close();
-        }
-    } else{
-        cout <<"[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
-    }
-}
 
 void infEventoParticular(){
     if(listadoEventos.size()>0){
@@ -306,7 +351,7 @@ void submenuInformes(){
             infEstadisticasAsist();
             break;
         case 4:
-            //infDetalleAsist();
+            infDetalleAsist();
             break;
         case 5:
             infEventoParticular();
@@ -347,8 +392,6 @@ bool verificarArchivos(string rutaTxt, string ruta2Txt, string ruta3Txt){
     ifstream file3(ruta3Txt);
 
     if(!file.is_open() || !file2.is_open() || !file3.is_open()){
-        //if(!file.is_open() && file2.is_open()){ file2.close(); }
-        //else if(file.is_open() && !file2.is_open()){ file.close(); }
         file.close(); file2.close(); file3.close();
         return false;
     }
@@ -444,7 +487,6 @@ int main(int argc, char const *argv[]) {
         leerArchivoEventos("Data/eventos.txt");
         leerArchivoAsistentes("Data/asistentes.txt");
         leerArchivoAsistencia("Data/listadoAsistencia.txt");
-        //mostrarListadoPersonas();
         menuPrincipal();
         destruirObjetos();
     

@@ -10,7 +10,21 @@ Evento::Evento(string id, string ubicacion, int duracion, int capacidad) {
 
 Evento::~Evento(){}
 
-string Evento::mostrarInformacionAsistentes() {
+int Evento::getCantidadAsistentes() {
+    return listadoAsistentes.size();
+}
+
+int Evento::obtenerPromedioAsistentes() {    
+    return getCantidadAsistentes()/capacidad;
+}
+
+int Evento::obtenerPorcentajeAsistencia()
+{
+    return obtenerPromedioAsistentes()*100;
+}
+
+string Evento::mostrarInformacionAsistentes()
+{
     string cadena;
     if(listadoAsistentes.size() > 0){
         for(int i = 0; i < listadoAsistentes.size(); i++){
