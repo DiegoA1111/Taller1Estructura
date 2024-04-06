@@ -51,7 +51,7 @@ void mostrarListadoEventos(){
     }
 }
 
-void mostrarListadoPersonas(){
+void mostrarListadoAsistentes(){
     cout << " --- Listado de Personas del Sistema --- "<<endl;
     for(int i = 0; i < listadoAsistentes.size(); i++){
         Persona *persona = listadoAsistentes[i];
@@ -474,7 +474,7 @@ void menuPrincipal(){
         case 2:
             registrarAsistenteAEvento(); break;
         case 3:
-            
+            mostrarListadoAsistentes(); break;
             break;
         case 4:
             mostrarListadoEventos();
