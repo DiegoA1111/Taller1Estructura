@@ -7,6 +7,8 @@ g++ Logic/App.cpp Domain/Persona.cpp Domain/Estudiante.cpp Domain/Evento.cpp Dom
 Comando para ejecutar el programa
 ./main
 
+Los informes quedan en la carpeta "Informes" del repositorio
+
 Se crean objetos de tipo 'Evento' a través de la carga de datos desde archivo "eventos.txt" durante el inicio del programa
 concierto:{id="EventID501",ubicacion="Estadio la Florida",duracion=240,capacidad=300,artista="Rihanna"}
 conferencia:{id="EventID341",ubicacion="Teatro Caroca",duracion=60,capacidad=60,orador="Jose Roman",tema="Inteligencia Artificial"}
