@@ -2,6 +2,11 @@
 Autor 1: Anibal Alberto Gonzalez Veira, Rut: 20.303.483-0, Correo: anibal.gonzalez@alumnos.ucn.cl
 Autor 2: Diego Andrés Véliz Muñoz, Rut: 20.797.904-K, Correo: diego.veliz@alumnos.ucn.cl
 
+Comando para compilación con g++
+g++ Logic/App.cpp Domain/Persona.cpp Domain/Estudiante.cpp Domain/Evento.cpp Domain/Concierto.cpp Domain/Conferencia.cpp Domain/Profesional.cpp -o main
+Comando para ejecutar el programa
+./main
+
 Se crean objetos de tipo 'Evento' a través de la carga de datos desde archivo "eventos.txt" durante el inicio del programa
 concierto:{id="EventID501",ubicacion="Estadio la Florida",duracion=240,capacidad=300,artista="Rihanna"}
 conferencia:{id="EventID341",ubicacion="Teatro Caroca",duracion=60,capacidad=60,orador="Jose Roman",tema="Inteligencia Artificial"}

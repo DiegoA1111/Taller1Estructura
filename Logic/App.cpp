@@ -33,11 +33,21 @@ string toLowerCase(string& cadenaInicial){
     return cadenaFinal;
 }
 
+vector<string> split(const string& linea, char separador) {
+    vector<string> partes;
+    stringstream ss(linea);
+    string parte;
+    while (getline(ss, parte, separador)) {
+        partes.push_back(parte);
+    }
+    return partes;
+}
+
 void mostrarListadoEventos(){
     cout << " --- Listado de Eventos del Sistema --- "<<endl;
     for(int i = 0; i < listadoEventos.size(); i++){
         Evento *evento = listadoEventos[i];
-        cout <<" "<< i+1 << ") " << evento->mostrarInformacion() << " | Id: "<<evento->getId()<< endl;
+        cout <<" "<< i+1 << ") " << evento->mostrarInformacion() << endl;
     }
 }
 
@@ -188,13 +198,16 @@ bool crearEvento(){
     return false;
 }
 
-int calcularPromedioEdades(){
-    int sumaEdades;
-    for(Persona *persona: listadoAsistentes){ sumaEdades += persona->getEdad(); }
-    return sumaEdades;
+float calcularPromedioEdades(){
+    int sumaEdades; int cantidadAsistentes;
+    if(cantidadAsistentes > 0){
+        for(Persona *persona: listadoAsistentes){ sumaEdades += persona->getEdad(); }
+        return sumaEdades/cantidadAsistentes;
+    }
+    return 0;
 }
 
-double calcularPromedioEdades(string tipoEntregado) {
+float calcularPromedioEdades(string tipoEntregado) {
     int totalEdades = 0;
     int cantidad = 0;
     if(listadoAsistentes.size() > 0){
@@ -208,22 +221,6 @@ double calcularPromedioEdades(string tipoEntregado) {
         return static_cast<float>(totalEdades)/cantidad;
     }
     return -1;
-}
-
-string ocupacionMasComun(){
-    if(listadoAsistentes.size() > 0){
-        for (Persona *persona : listadoAsistentes) {
-            string tipo = persona->getTipo(); string type = "Profesional";
-            if (toLowerCase(tipo) == toLowerCase(type)) {
-                persona->getAtributoDiferencial1();
-            }
-        } 
-        return "a";
-    }
-}
-
-string carreraMasComun(){
-
 }
 
 void infListaEventos(){
@@ -289,10 +286,10 @@ void infEstadisticasAsist(){
 
 void infDetalleAsist(){
     if(listadoAsistentes.size() > 0){
-        int promedio = calcularPromedioEdades()/listadoAsistentes.size();
-        double promedioEdadesEstudiantes = calcularPromedioEdades("Estudiante");
-        double promedioEdadesProfesionales = calcularPromedioEdades("Profesional");
-        double promedioEdadesGeneral = (promedioEdadesEstudiantes + promedioEdadesProfesionales) /2;
+        float promedio = calcularPromedioEdades();
+        float promedioEdadesEstudiantes = calcularPromedioEdades("Estudiante");
+        float promedioEdadesProfesionales = calcularPromedioEdades("Profesional");
+        float promedioEdadesGeneral = (promedioEdadesEstudiantes + promedioEdadesProfesionales) /2;
         cout << "Ingrese nombre del archivo .txt: "<<endl; 
         cout<< "[i] Tenga en cuenta que si escribe el nombre de un archivo existente, se sobrescribirá."<<endl;
         cout << "Nombre del archivo (escriba sin '.txt'): "; string fileName; getline(cin,fileName);
@@ -310,7 +307,6 @@ void infDetalleAsist(){
         } else{
             cout << "[!] Hubo un error al intentar generar el informe. Revise los datos ingresados."<<endl;
         }
-
     } else{
         cout <<"[!] El listado de asistentes está vacío."<< endl;
     }    
@@ -375,6 +371,7 @@ void menuPrincipal(){
             if(registrarAsistente()){cout << "[i] Asistente agregado exitosamente."; }
             else{cout << "[!] No se pudo registrar asistente. "<<endl; } break;
         case 3:
+
             break;
         case 4:
             mostrarListadoEventos();
@@ -403,14 +400,7 @@ void leerArchivoEventos(string rutaTxt){
     string line;
 
     while(getline(file,line)){
-        vector <string> partes;
-        stringstream ss(line);
-        string parte;
-
-        while(getline(ss,parte,'/')){
-            partes.push_back(parte);
-        }
-
+        vector <string> partes = split(line,'/');
         string id = partes[0]; string tipo = partes[1]; string ubicacion = partes[2];
         int duracion = stoi(partes[3]); int capacidad = stoi(partes[4]);
         if(toLowerCase(tipo) == "concierto") {
@@ -429,14 +419,7 @@ void leerArchivoAsistentes(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
-        vector <string> partes;
-        stringstream ss(line);
-        string parte;
-
-        while(getline(ss,parte,'/')){
-            partes.push_back(parte);
-        }
-
+        vector <string> partes = split(line,'/');
         string tipo = partes[0];
         string nombre = partes[1];
         string dni = partes[2];
@@ -461,14 +444,7 @@ void leerArchivoAsistencia(string rutaTxt){
     ifstream file(rutaTxt);
     string line;
     while(getline(file,line)){
-        vector <string> partes;
-        stringstream ss(line);
-        string parte;
-
-        while(getline(ss,parte,'/')){
-            partes.push_back(parte);
-        }
-
+       vector <string> partes = split(line,'/');
         string id = partes[0]; Evento *evento = buscarEvento(id);
         if(evento != nullptr){
             for(int i = 1; i < partes.size(); i++){
